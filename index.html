@@ -15,11 +15,18 @@
   </head>
   <body>
     <main class="game-page">
-      <!-- Sean: extend the score, instructions and game-over markup. -->
-      <header>
-        <h1>Jumping Game</h1>
-        <p id="game-instructions">Jump over obstacles to earn points.</p>
-        <p>Score: <span id="score">0</span></p>
+      <!-- Score and instructions -->
+      <header class="game-hud">
+        <div>
+          <h1 class="game-title">Jumping Game</h1>
+          <p id="game-instructions" class="game-instructions">
+            Jump over obstacles to earn points. A collision ends your run.
+          </p>
+        </div>
+        <p class="game-score">
+          <span class="game-score-label">Score</span>
+          <span id="score" class="game-score-value">0</span>
+        </p>
       </header>
 
       <!-- Nkheso: extend the game area, ground and obstacle container. -->
@@ -32,10 +39,16 @@
       </section>
 
       <!-- Sean: show this panel on collision and wire the restart button. -->
-      <section id="game-over" class="game-over" aria-labelledby="game-over-title" hidden>
-        <h2 id="game-over-title">Game over</h2>
-        <p>Final score: <span id="final-score">0</span></p>
-        <button id="restart-btn" type="button">Play again</button>
+      <section
+        id="game-over"
+        class="game-over"
+        aria-labelledby="game-over-title"
+        tabindex="-1"
+        hidden
+      >
+        <h2 id="game-over-title" class="game-over-title">Game over</h2>
+        <p class="game-final-score">Final score: <span id="final-score">0</span></p>
+        <button id="restart-btn" class="game-restart" type="button">Play again</button>
       </section>
       <noscript>This game needs JavaScript enabled in your browser.</noscript>
     </main>
