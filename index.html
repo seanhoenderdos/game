@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A jumping game built with vanilla JavaScript." />
+    <title>Jumping Game</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/game.css" />
+    <link rel="stylesheet" href="./css/hud.css" />
+    <link rel="stylesheet" href="./css/player.css" />
+    <link rel="stylesheet" href="./css/obstacles.css" />
+    <script type="module" src="./js/main.js"></script>
+  </head>
+  <body>
+    <main class="game-page">
+      <!-- Sean: extend the score, instructions and game-over markup. -->
+      <header>
+        <h1>Jumping Game</h1>
+        <p id="game-instructions">Jump over obstacles to earn points.</p>
+        <p>Score: <span id="score">0</span></p>
+      </header>
+
+      <!-- Nkheso: extend the game area, ground and obstacle container. -->
+      <section id="game-area" class="game-area" aria-label="Game area">
+        <p>Game coming soon.</p>
+        <!-- Nourhan: extend the player character markup. -->
+        <div id="player" class="player-character"></div>
+        <div id="obstacle-layer" class="obstacle-layer" aria-hidden="true"></div>
+        <div class="game-ground" aria-hidden="true"></div>
+      </section>
+
+      <!-- Sean: show this panel on collision and wire the restart button. -->
+      <section id="game-over" class="game-over" aria-labelledby="game-over-title" hidden>
+        <h2 id="game-over-title">Game over</h2>
+        <p>Final score: <span id="final-score">0</span></p>
+        <button id="restart-btn" type="button">Play again</button>
+      </section>
+      <noscript>This game needs JavaScript enabled in your browser.</noscript>
+    </main>
+  </body>
+</html>
