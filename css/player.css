@@ -1,2 +1,55 @@
-/* Owner: Nourhan. Implement the player-character class and player visuals here. */
-/* Use player- prefixed classes. Coordinate ground position with Nkheso. */
+/* Owner: Nourhan — feature/game-player. */
+
+.player-character {
+  --player-fur: #fff0f4;
+  --player-outline: #88566b;
+  --player-ear-inner: #e994b0;
+
+  position: absolute;
+  bottom: 20px;
+  left: 1.5rem;
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.35rem;
+  box-sizing: border-box;
+  border: 2px solid var(--player-outline);
+  border-radius: 48% 48% 42% 42%;
+  background: linear-gradient(145deg, #ffffff, var(--player-fur));
+  box-shadow: 0 3px 0 rgb(136 86 107 / 15%);
+  will-change: transform;
+}
+
+.player-character::before {
+  position: absolute;
+  top: -0.85rem;
+  left: 0.3rem;
+  width: 0.55rem;
+  height: 1.1rem;
+  border: 2px solid var(--player-outline);
+  border-radius: 60% 60% 45% 45%;
+  background: linear-gradient(
+    to right,
+    var(--player-fur) 15%,
+    var(--player-ear-inner) 55%,
+    var(--player-fur) 90%
+  );
+  box-shadow:
+    0.75rem 0.1rem 0 -2px var(--player-fur),
+    0.75rem 0.1rem 0 0 var(--player-outline);
+  content: '';
+  transform: rotate(-12deg);
+}
+
+.player-character::after {
+  position: absolute;
+  inset: 0.3rem 0.15rem 0.2rem;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 28% 38%, #493440 0 0.11rem, transparent 0.13rem),
+    radial-gradient(circle at 72% 38%, #493440 0 0.11rem, transparent 0.13rem),
+    radial-gradient(circle at 50% 57%, #d96f96 0 0.1rem, transparent 0.12rem),
+    radial-gradient(ellipse at 22% 57%, #f5b2c7 0 0.2rem, transparent 0.22rem),
+    radial-gradient(ellipse at 78% 57%, #f5b2c7 0 0.2rem, transparent 0.22rem);
+  content: '';
+  pointer-events: none;
+}

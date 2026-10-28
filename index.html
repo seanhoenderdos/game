@@ -15,7 +15,6 @@
   </head>
   <body>
     <main class="game-page">
-      <!-- Score and instructions -->
       <header class="game-hud">
         <div>
           <h1 class="game-title">Jumping Game</h1>
@@ -23,22 +22,19 @@
             Jump over obstacles to earn points. A collision ends your run.
           </p>
         </div>
+
         <p class="game-score">
           <span class="game-score-label">Score</span>
           <span id="score" class="game-score-value">0</span>
         </p>
       </header>
 
-      <!-- Nkheso: extend the game area, ground and obstacle container. -->
       <section id="game-area" class="game-area" aria-label="Game area">
-        <p>Game coming soon.</p>
-        <!-- Nourhan: extend the player character markup. -->
         <div id="player" class="player-character"></div>
         <div id="obstacle-layer" class="obstacle-layer" aria-hidden="true"></div>
         <div class="game-ground" aria-hidden="true"></div>
       </section>
 
-      <!-- Sean: show this panel on collision and wire the restart button. -->
       <section
         id="game-over"
         class="game-over"
@@ -50,6 +46,7 @@
         <p class="game-final-score">Final score: <span id="final-score">0</span></p>
         <button id="restart-btn" class="game-restart" type="button">Play again</button>
       </section>
+
       <noscript>This game needs JavaScript enabled in your browser.</noscript>
     </main>
   </body>
