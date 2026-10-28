@@ -1,11 +1,24 @@
 /**
  * Owner: Sean — feature/game-controller.
- * Phase 0 interfaces only. Implement the controller on your feature branch.
+ * Game state and HUD updates. Animation and feature integration follow later.
  */
 
-/** Start or restart a run, reset state and schedule one animation loop. */
+const scoreElement = document.getElementById('score');
+const finalScoreElement = document.getElementById('final-score');
+const gameOverElement = document.getElementById('game-over');
+
+let isRunning = false;
+let score = 0;
+
+/** Start or restart a run with a clean score and a hidden game-over panel. */
 export function startGame() {
-  // TODO (Sean): connect controls, reset modules, score and game-over UI.
+  score = 0;
+  isRunning = true;
+  scoreElement.textContent = String(score);
+  finalScoreElement.textContent = String(score);
+  gameOverElement.hidden = true;
+
+  // TODO (Sean): reset player/obstacles and start the animation loop in later parts.
 }
 
 /** @param {number} timestamp - requestAnimationFrame timestamp in milliseconds. */
@@ -14,7 +27,16 @@ export function gameLoop(timestamp) {
   void timestamp;
 }
 
-/** Stop the active run and show its final score. */
+/** Mark the active run as finished and show its final score. */
 export function endGame() {
-  // TODO (Sean): cancel animation, stop updates and show the game-over panel.
+  if (!isRunning) {
+    return;
+  }
+
+  isRunning = false;
+  finalScoreElement.textContent = String(score);
+  gameOverElement.hidden = false;
+  gameOverElement.focus();
+
+  // TODO (Sean): cancel the animation frame when the loop is implemented.
 }
