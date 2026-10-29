@@ -19,22 +19,15 @@ function rand(min, max) {
 }
 
 function scheduleNextSpawn() {
-  timeUntilNextSpawn = rand(
-    MIN_SPAWN_INTERVAL,
-    MAX_SPAWN_INTERVAL
-  );
+  timeUntilNextSpawn = rand(MIN_SPAWN_INTERVAL, MAX_SPAWN_INTERVAL);
 }
 
 export function spawnObstacle() {
   if (!obstacleLayer) return null;
 
-  const width = Math.round(
-    rand(OBSTACLE_WIDTH.min, OBSTACLE_WIDTH.max)
-  );
+  const width = Math.round(rand(OBSTACLE_WIDTH.min, OBSTACLE_WIDTH.max));
 
-  const height = Math.round(
-    rand(OBSTACLE_HEIGHT.min, OBSTACLE_HEIGHT.max)
-  );
+  const height = Math.round(rand(OBSTACLE_HEIGHT.min, OBSTACLE_HEIGHT.max));
 
   const el = document.createElement('div');
   el.className = 'obstacle';
@@ -53,7 +46,7 @@ export function spawnObstacle() {
     x,
     width,
     height,
-    passed: false
+    passed: false,
   });
 
   return el;
@@ -81,8 +74,7 @@ export function updateObstacles(deltaSeconds) {
   const playerEl = document.getElementById('player');
 
   const playerX = playerEl
-    ? playerEl.getBoundingClientRect().left -
-      obstacleLayer.getBoundingClientRect().left
+    ? playerEl.getBoundingClientRect().left - obstacleLayer.getBoundingClientRect().left
     : 0;
 
   let newlyPassed = 0;
@@ -93,10 +85,7 @@ export function updateObstacles(deltaSeconds) {
     obstacle.x -= dx;
     obstacle.el.style.left = `${obstacle.x}px`;
 
-    if (
-      !obstacle.passed &&
-      obstacle.x + obstacle.width < playerX
-    ) {
+    if (!obstacle.passed && obstacle.x + obstacle.width < playerX) {
       obstacle.passed = true;
       newlyPassed++;
     }
