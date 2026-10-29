@@ -6,7 +6,6 @@
   pointer-events: none;
 }
 
-
 .obstacle {
   position: absolute;
   left: 0;
@@ -17,7 +16,7 @@
 
 .obstacle::before,
 .obstacle::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 8px;
   height: 12px;
