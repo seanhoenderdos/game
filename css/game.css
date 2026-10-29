@@ -1,9 +1,16 @@
 /* Owner: Nkheso. Phase 0 container only; implement the environment here. */
 .game-area {
   position: relative;
-  min-height: 18rem;
+  height: 18rem;
   overflow: hidden;
   border: 1px solid currentColor;
 }
 
-/* TODO (Nkheso): style .game-ground and define the playable ground position. */
+.game-ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-color: #555;
+}

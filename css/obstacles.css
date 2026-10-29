@@ -1,2 +1,35 @@
 /* Owner: Nkheso. Implement obstacle-layer and generated obstacle styles here. */
-/* Use obstacle- prefixed classes and keep obstacles inside #obstacle-layer. */
+.obstacle-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.obstacle {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  background-color: #228b22;
+  border-radius: 4px 4px 0 0;
+}
+
+.obstacle::before,
+.obstacle::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 12px;
+  background-color: #228b22;
+  border-radius: 3px;
+}
+
+.obstacle::before {
+  top: 40%;
+  left: -6px;
+}
+
+.obstacle::after {
+  top: 55%;
+  right: -6px;
+}

@@ -1,11 +1,55 @@
 /**
  * Owner: Nkheso — feature/game-obstacles.
- * Phase 0 interfaces only. Implement obstacles on your feature branch.
  */
 
-/** Create and track a new obstacle inside #obstacle-layer. */
+const obstacleLayer = document.getElementById('obstacle-layer');
+const obstacles = [];
+
+const OBSTACLE_SPEED = 320;
+const MIN_SPAWN_INTERVAL = 1.1;
+const MAX_SPAWN_INTERVAL = 2.2;
+
+const OBSTACLE_WIDTH = { min: 22, max: 38 };
+const OBSTACLE_HEIGHT = { min: 28, max: 60 };
+
+let timeUntilNextSpawn = 0.8;
+
+function rand(min, max) {
+  return min + Math.random() * (max - min);
+}
+
+function scheduleNextSpawn() {
+  timeUntilNextSpawn = rand(MIN_SPAWN_INTERVAL, MAX_SPAWN_INTERVAL);
+}
+
 export function spawnObstacle() {
-  // TODO (Nkheso): create an obstacle and add it to the tracked collection.
+  if (!obstacleLayer) return null;
+
+  const width = Math.round(rand(OBSTACLE_WIDTH.min, OBSTACLE_WIDTH.max));
+
+  const height = Math.round(rand(OBSTACLE_HEIGHT.min, OBSTACLE_HEIGHT.max));
+
+  const el = document.createElement('div');
+  el.className = 'obstacle';
+  el.style.width = `${width}px`;
+  el.style.height = `${height}px`;
+
+  const x = obstacleLayer.clientWidth;
+
+  el.style.left = `${x}px`;
+  el.style.bottom = '20px';
+
+  obstacleLayer.appendChild(el);
+
+  obstacles.push({
+    el,
+    x,
+    width,
+    height,
+    passed: false,
+  });
+
+  return el;
 }
 
 /**
@@ -13,9 +57,46 @@ export function spawnObstacle() {
  * @returns {number} Newly passed obstacles in this update, each counted once.
  */
 export function updateObstacles(deltaSeconds) {
-  // TODO (Nkheso): move obstacles, count passes and remove off-screen obstacles.
-  void deltaSeconds;
-  return 0;
+  if (!obstacleLayer) return 0;
+
+  if (!Number.isFinite(deltaSeconds) || deltaSeconds < 0) {
+    return 0;
+  }
+
+  timeUntilNextSpawn -= deltaSeconds;
+
+  if (timeUntilNextSpawn <= 0) {
+    spawnObstacle();
+    scheduleNextSpawn();
+  }
+
+  const dx = OBSTACLE_SPEED * deltaSeconds;
+  const playerEl = document.getElementById('player');
+
+  const playerX = playerEl
+    ? playerEl.getBoundingClientRect().left - obstacleLayer.getBoundingClientRect().left
+    : 0;
+
+  let newlyPassed = 0;
+
+  for (let i = obstacles.length - 1; i >= 0; i--) {
+    const obstacle = obstacles[i];
+
+    obstacle.x -= dx;
+    obstacle.el.style.left = `${obstacle.x}px`;
+
+    if (!obstacle.passed && obstacle.x + obstacle.width < playerX) {
+      obstacle.passed = true;
+      newlyPassed++;
+    }
+
+    if (obstacle.x + obstacle.width < 0) {
+      obstacle.el.remove();
+      obstacles.splice(i, 1);
+    }
+  }
+
+  return newlyPassed;
 }
 
 /**
@@ -23,12 +104,28 @@ export function updateObstacles(deltaSeconds) {
  * @returns {boolean} Whether the player overlaps an obstacle.
  */
 export function checkCollision(playerBounds) {
-  // TODO (Nkheso): compare player and obstacle bounding rectangles.
-  void playerBounds;
+  if (!playerBounds || !obstacleLayer) return false;
+
+  for (const obstacle of obstacles) {
+    const bounds = obstacle.el.getBoundingClientRect();
+
+    const overlap =
+      playerBounds.left < bounds.right &&
+      playerBounds.right > bounds.left &&
+      playerBounds.top < bounds.bottom &&
+      playerBounds.bottom > bounds.top;
+
+    if (overlap) return true;
+  }
+
   return false;
 }
 
-/** Remove all obstacle elements and reset obstacle state. */
 export function resetObstacles() {
-  // TODO (Nkheso): clear tracked obstacles and reset spawn timing.
+  for (const obstacle of obstacles) {
+    obstacle.el.remove();
+  }
+
+  obstacles.length = 0;
+  timeUntilNextSpawn = 0.8;
 }
