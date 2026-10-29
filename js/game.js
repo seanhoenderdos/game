@@ -1,7 +1,10 @@
 /**
  * Owner: Sean — feature/game-controller.
- * Game state, HUD updates and animation timing. Feature integration follows later.
+ * Game state, HUD updates and coordination of player and obstacle mechanics.
  */
+
+import { getPlayerBounds, jump, resetPlayer, setupControls, updatePlayer } from './player.js';
+import { checkCollision, resetObstacles, updateObstacles } from './obstacles.js';
 
 const scoreElement = document.getElementById('score');
 const finalScoreElement = document.getElementById('final-score');
@@ -15,16 +18,24 @@ let score = 0;
 let animationFrameId = null;
 let previousTimestamp = null;
 
+// ES modules initialise once, so restarting does not register another control handler.
+setupControls(() => {
+  if (isRunning) {
+    jump();
+  }
+});
+
 /** Start or restart a run with a clean score and one animation loop. */
 export function startGame() {
   stopAnimationLoop();
+  resetPlayer();
+  resetObstacles();
   score = 0;
   isRunning = true;
   scoreElement.textContent = String(score);
   finalScoreElement.textContent = String(score);
   gameOverElement.hidden = true;
 
-  // TODO (Sean): reset the player and obstacles when integrating their modules.
   animationFrameId = requestAnimationFrame(gameLoop);
 }
 
@@ -42,7 +53,10 @@ export function gameLoop(timestamp) {
       : Math.min((timestamp - previousTimestamp) / 1000, MAX_DELTA_SECONDS);
   previousTimestamp = timestamp;
 
-  updateGame(deltaSeconds);
+  // The first frame establishes timing; advancing zero time can cancel a new jump.
+  if (deltaSeconds > 0) {
+    updateGame(deltaSeconds);
+  }
 
   // A collision may end the run during updateGame, so check before continuing.
   if (isRunning && animationFrameId === null) {
@@ -75,6 +89,15 @@ function stopAnimationLoop() {
 
 /** @param {number} deltaSeconds - Elapsed simulation time in seconds. */
 function updateGame(deltaSeconds) {
-  // TODO (Sean): connect player/obstacle updates, scoring and collisions in Part 4.
-  void deltaSeconds;
+  updatePlayer(deltaSeconds);
+  const newlyPassed = updateObstacles(deltaSeconds);
+
+  if (newlyPassed > 0) {
+    score += newlyPassed;
+    scoreElement.textContent = String(score);
+  }
+
+  if (checkCollision(getPlayerBounds())) {
+    endGame();
+  }
 }
