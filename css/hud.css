@@ -3,44 +3,55 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-  color: #0f172a;
+  gap: clamp(1rem, 3vw, 3rem);
+  margin-bottom: 2.5rem;
+  color: var(--game-color-text);
+}
+
+.game-hud > div {
+  min-width: 0;
 }
 
 .game-title {
   margin: 0;
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  line-height: 1.2;
+  color: var(--game-color-text);
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-weight: 700;
+  line-height: 1;
 }
 
 .game-instructions {
-  max-width: 44ch;
+  max-width: 50ch;
   margin: 0.75rem 0 0;
-  color: #475569;
+  color: var(--game-color-text);
+  font-size: clamp(1rem, 2.4vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .game-score {
   display: flex;
   flex: 0 0 auto;
-  flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
-  min-width: 6rem;
+  justify-content: space-between;
+  gap: 2rem;
+  min-width: clamp(12rem, 28vw, 25rem);
   margin: 0;
-  padding: 0.75rem 1rem;
-  border: 2px solid #cbd5e1;
-  border-radius: 0.75rem;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  border: 3px solid var(--game-color-border);
+  border-radius: 1rem;
+  background-color: var(--game-color-accent);
 }
 
 .game-score-label {
-  color: #475569;
-  font-size: 0.875rem;
+  color: var(--game-color-text);
+  font-size: clamp(1.25rem, 2.5vw, 2.5rem);
   font-weight: 600;
 }
 
 .game-score-value {
-  font-size: 2rem;
+  color: var(--game-color-text);
+  font-size: clamp(2rem, 4vw, 4rem);
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
@@ -48,58 +59,75 @@
 
 /* The shared [hidden] rule keeps this panel out of view until the run ends. */
 .game-over {
-  margin-top: 1.5rem;
-  padding: 1.5rem;
-  border: 2px solid #cbd5e1;
-  border-radius: 0.75rem;
-  background-color: #f8fafc;
-  color: #0f172a;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  color: var(--game-color-text);
+  text-align: left;
 }
 
 .game-over-title {
   margin: 0;
-  font-size: 1.5rem;
-  line-height: 1.25;
+  color: var(--game-color-text);
+  font-size: clamp(2rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
 }
 
 .game-final-score {
-  margin: 0.75rem 0 1.25rem;
+  margin: 0.25rem 0 0;
+  font-size: clamp(1.125rem, 2.5vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.25;
 }
 
 .game-final-score span {
+  color: var(--game-color-text);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
 .game-restart {
-  min-height: 44px;
-  padding: 0.625rem 1.25rem;
-  border: 2px solid #0f172a;
-  border-radius: 0.5rem;
-  background-color: #0f172a;
-  color: #fff;
-  font-weight: 600;
+  min-width: clamp(12rem, 29vw, 26rem);
+  min-height: 3.5rem;
+  padding: 1rem 2rem;
+  border: 3px solid var(--game-color-border);
+  border-radius: 0.75rem;
+  background-color: var(--game-color-accent);
+  color: var(--game-color-text);
+  box-shadow: 6px 6px 0 var(--game-color-border);
+  font-size: clamp(1.25rem, 3vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
   cursor: pointer;
 }
 
 .game-restart:hover {
-  background-color: #334155;
+  background-color: var(--game-color-accent-hover);
 }
 
 .game-restart:focus-visible {
-  outline: 3px solid #2563eb;
-  outline-offset: 4px;
+  outline: 3px solid var(--game-color-text);
+  outline-offset: 8px;
 }
 
-@media (max-width: 36rem) {
-  .game-hud {
+@media (max-width: 48rem) {
+  .game-hud,
+  .game-over {
     flex-direction: column;
     align-items: stretch;
+    gap: 1.5rem;
   }
 
   .game-score {
-    flex-direction: row;
-    justify-content: space-between;
+    min-width: 0;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .game-restart {
+    min-width: 0;
+    width: 100%;
   }
 }

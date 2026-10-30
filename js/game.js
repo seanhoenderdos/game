@@ -9,6 +9,7 @@ import { checkCollision, resetObstacles, updateObstacles } from './obstacles.js'
 const scoreElement = document.getElementById('score');
 const finalScoreElement = document.getElementById('final-score');
 const gameOverElement = document.getElementById('game-over');
+const restartButton = document.getElementById('restart-btn');
 
 // Limit a single update after a long pause, such as returning to a background tab.
 const MAX_DELTA_SECONDS = 0.05;
@@ -74,7 +75,8 @@ export function endGame() {
   stopAnimationLoop();
   finalScoreElement.textContent = String(score);
   gameOverElement.hidden = false;
-  gameOverElement.focus();
+  // Focus the actionable control, rather than outlining the entire summary panel.
+  restartButton.focus({ preventScroll: true });
 }
 
 /** Cancel a pending frame and discard timing from the previous run. */
