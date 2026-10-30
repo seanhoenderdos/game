@@ -9,7 +9,7 @@
   --player-outline: var(--game-color-text, #3f3047);
   --player-ear-inner: #e7a1bc;
   --player-ink: var(--game-color-text, #3f3047);
-  --rabbit-zoom: 1.2; /* rabbit size: 1 = original, 1.2 = 20% bigger */
+  --rabbit-zoom: 1.4;
 
   position: absolute;
   bottom: 20px;
