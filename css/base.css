@@ -1,11 +1,41 @@
+/* Fredoka is bundled locally; its license is in assets/fonts/OFL.txt. */
+@font-face {
+  font-family: Fredoka;
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('../assets/fonts/fredoka-latin.woff2') format('woff2');
+}
+
 /* Shared foundation. Coordinate changes to these page-wide rules. */
+:root {
+  /* Shared Orange Arcade palette. Reuse these in each contributor's styles. */
+  --game-font-family: 'Fredoka', 'Arial Black', system-ui, sans-serif;
+  --game-color-page: #fff7ed;
+  --game-color-sky: #7ed4f4;
+  --game-color-ground: #ffcb64;
+  --game-color-cactus: #2f813d;
+  --game-color-rabbit: #fff0f4;
+  --game-color-surface: #fff7ed;
+  --game-color-accent: #ff9f1c;
+  --game-color-accent-hover: #f28c18;
+  --game-color-text: #000;
+  --game-color-text-muted: #000;
+  --game-color-border: #000;
+  --game-color-white: #fff;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
+  min-height: 100vh;
   margin: 0;
-  font-family: system-ui, sans-serif;
+  background-color: var(--game-color-page);
+  color: var(--game-color-text);
+  font-family: var(--game-font-family);
+  font-weight: 500;
   line-height: 1.5;
 }
 
@@ -18,7 +48,13 @@ button {
 }
 
 .game-page {
-  width: min(100% - 2rem, 60rem);
+  width: min(100% - 4rem, 90rem);
   margin-inline: auto;
-  padding-block: 2rem;
+  padding-block: clamp(2rem, 4vw, 4rem);
+}
+
+@media (max-width: 48rem) {
+  .game-page {
+    width: calc(100% - 2rem);
+  }
 }
