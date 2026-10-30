@@ -1,6 +1,7 @@
 /* Owner: Nkheso. Implement obstacle-layer and generated obstacle styles here. */
 .obstacle-layer {
   position: absolute;
+  z-index: 2;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
@@ -10,8 +11,8 @@
   position: absolute;
   left: 0;
   bottom: 20px;
-  background-color: #228b22;
-  border-radius: 4px 4px 0 0;
+  background-color: #03521b;
+  border-radius: 5px 5px 2px 2px;
 }
 
 .obstacle::before,
@@ -20,8 +21,8 @@
   position: absolute;
   width: 8px;
   height: 12px;
-  background-color: #228b22;
-  border-radius: 3px;
+  background-color: #03511a;
+  border-radius: 4px;
 }
 
 .obstacle::before {
