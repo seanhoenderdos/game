@@ -1,30 +1,107 @@
 /* Owner: Nourhan — feature/game-player. */
 
+/*
+ * #player is the invisible hitbox. Its size is 2.5rem x 2.35rem times
+ * --rabbit-zoom, and the drawn parts below are zoomed by the same amount.
+ */
 .player-character {
-  --player-fur: #fff0f4;
-  --player-outline: #88566b;
-  --player-ear-inner: #e994b0;
+  --player-fur: var(--game-color-rabbit, #fff0f4);
+  --player-outline: var(--game-color-text, #3f3047);
+  --player-ear-inner: #e7a1bc;
+  --player-ink: var(--game-color-text, #3f3047);
+  --rabbit-zoom: 1.2; /* rabbit size: 1 = original, 1.2 = 20% bigger */
 
   position: absolute;
   bottom: 20px;
   left: 1.5rem;
   z-index: 2;
-  width: 2.5rem;
-  height: 2.35rem;
+  width: calc(2.5rem * var(--rabbit-zoom));
+  height: calc(2.35rem * var(--rabbit-zoom));
   box-sizing: border-box;
-  border: 2px solid var(--player-outline);
-  border-radius: 48% 48% 42% 42%;
-  background: linear-gradient(145deg, #ffffff, var(--player-fur));
-  box-shadow: 0 3px 0 rgb(136 86 107 / 15%);
   will-change: transform;
 }
 
+/* Tail (fluffy puff behind the body). */
 .player-character::before {
+  zoom: var(--rabbit-zoom);
   position: absolute;
-  top: -0.85rem;
-  left: 0.3rem;
-  width: 0.55rem;
-  height: 1.1rem;
+  bottom: 0.75rem;
+  left: -0.2rem;
+  z-index: 0;
+  width: 0.65rem;
+  height: 0.65rem;
+  box-sizing: border-box;
+  border: 2px solid var(--player-outline);
+  border-radius: 50%;
+  background: #ffffff;
+  content: '';
+}
+
+/* Body. */
+.player-body {
+  zoom: var(--rabbit-zoom);
+  position: absolute;
+  bottom: 0.25rem;
+  left: 0.1rem;
+  z-index: 1;
+  width: 1.8rem;
+  height: 1.3rem;
+  box-sizing: border-box;
+  border: 2px solid var(--player-outline);
+  border-radius: 50% 48% 45% 50% / 60% 55% 45% 45%;
+  background: linear-gradient(145deg, #ffffff, var(--player-fur));
+}
+
+/* Back foot and front foot. */
+.player-body::before,
+.player-body::after {
+  position: absolute;
+  bottom: -0.375rem; /* feet bottom = hitbox bottom, so they only touch the ground line */
+  width: 0.7rem;
+  height: 0.6rem;
+  box-sizing: border-box;
+  border: 2px solid var(--player-outline);
+  border-radius: 50%;
+  background: var(--player-fur);
+  content: '';
+}
+
+.player-body::before {
+  left: 0.1rem;
+}
+
+.player-body::after {
+  right: 0.15rem;
+}
+
+/* Head with eye, nose and cheek (rabbit faces right). */
+.player-head {
+  zoom: var(--rabbit-zoom);
+  position: absolute;
+  bottom: 0.55rem;
+  left: 1.2rem;
+  z-index: 2;
+  width: 1.3rem;
+  height: 1.15rem;
+  box-sizing: border-box;
+  border: 2px solid var(--player-outline);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 68% 40%, var(--player-ink) 0 0.09rem, transparent 0.11rem),
+    radial-gradient(circle at 94% 55%, #c9638c 0 0.08rem, transparent 0.1rem),
+    radial-gradient(ellipse at 62% 72%, #f5b2c7 0 0.14rem, transparent 0.16rem),
+    linear-gradient(145deg, #ffffff, var(--player-fur));
+}
+
+/* Ears: separate elements so they can move independently of the body. */
+.player-ear {
+  zoom: var(--rabbit-zoom);
+  position: absolute;
+  top: -0.3rem;
+  z-index: 1;
+  width: 0.45rem;
+  height: 1rem;
+  box-sizing: content-box;
   border: 2px solid var(--player-outline);
   border-radius: 60% 60% 45% 45%;
   background: linear-gradient(
@@ -33,23 +110,31 @@
     var(--player-ear-inner) 55%,
     var(--player-fur) 90%
   );
-  box-shadow:
-    0.75rem 0.1rem 0 -2px var(--player-fur),
-    0.75rem 0.1rem 0 0 var(--player-outline);
-  content: '';
+  transform-origin: 50% 90%;
+  transition: transform 140ms ease-out;
+}
+
+.player-ear--left {
+  left: 1.3rem;
   transform: rotate(-12deg);
 }
 
-.player-character::after {
-  position: absolute;
-  inset: 0.3rem 0.15rem 0.2rem;
-  border-radius: inherit;
-  background:
-    radial-gradient(circle at 28% 38%, #493440 0 0.11rem, transparent 0.13rem),
-    radial-gradient(circle at 72% 38%, #493440 0 0.11rem, transparent 0.13rem),
-    radial-gradient(circle at 50% 57%, #d96f96 0 0.1rem, transparent 0.12rem),
-    radial-gradient(ellipse at 22% 57%, #f5b2c7 0 0.2rem, transparent 0.22rem),
-    radial-gradient(ellipse at 78% 57%, #f5b2c7 0 0.2rem, transparent 0.22rem);
-  content: '';
-  pointer-events: none;
+.player-ear--right {
+  left: 1.7rem;
+  transform: rotate(-6deg);
+}
+
+/* Subtle ear sweep-back while airborne. */
+.player-character.is-jumping .player-ear--left {
+  transform: rotate(-28deg);
+}
+
+.player-character.is-jumping .player-ear--right {
+  transform: rotate(-22deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player-ear {
+    transition: none;
+  }
 }
