@@ -43,6 +43,7 @@ export function jump() {
 
   verticalVelocity = JUMP_VELOCITY;
   isGrounded = false;
+  document.getElementById('player')?.classList.add('is-jumping');
 }
 
 /** @param {number} deltaSeconds - Elapsed simulation time in seconds. */
@@ -66,6 +67,7 @@ export function updatePlayer(deltaSeconds) {
     jumpHeight = 0;
     verticalVelocity = 0;
     isGrounded = true;
+    player.classList.remove('is-jumping');
   }
 
   player.style.transform = `translateY(${-jumpHeight}px)`;
@@ -88,5 +90,6 @@ export function resetPlayer() {
 
   if (player) {
     player.style.transform = 'translateY(0px)';
+    player.classList.remove('is-jumping');
   }
 }
