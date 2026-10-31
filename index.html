@@ -19,7 +19,7 @@
         <div>
           <h1 class="game-title">Jumping Game</h1>
           <p id="game-instructions" class="game-instructions">
-            Jump over obstacles to earn points. A collision ends your run.
+            Press Space or Arrow Up to jump. Avoid obstacles to earn points.
           </p>
         </div>
 
@@ -40,15 +40,19 @@
         <div class="game-ground" aria-hidden="true"></div>
       </section>
 
-      <section
-        id="game-over"
-        class="game-over"
-        aria-labelledby="game-over-title"
-        tabindex="-1"
-        hidden
-      >
-        <h2 id="game-over-title" class="game-over-title">Game over</h2>
-        <p class="game-final-score">Final score: <span id="final-score">0</span></p>
+      <section id="game-start" class="game-start" aria-labelledby="game-start-title">
+        <div>
+          <h2 id="game-start-title" class="game-start-title">Ready to jump?</h2>
+          <p class="game-start-instructions">Choose Start game when you're ready.</p>
+        </div>
+        <button id="start-btn" class="game-start-button" type="button">Start game</button>
+      </section>
+
+      <section id="game-over" class="game-over" aria-labelledby="game-over-title" hidden>
+        <div>
+          <h2 id="game-over-title" class="game-over-title">Game over</h2>
+          <p class="game-final-score">Final score: <span id="final-score">0</span></p>
+        </div>
         <button id="restart-btn" class="game-restart" type="button">Play again</button>
       </section>
 
