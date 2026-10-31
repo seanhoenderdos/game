@@ -17,8 +17,10 @@
     <main class="game-page">
       <header class="game-hud">
         <div>
-          <h1 class="game-title" tabindex="-1">Jumping Game</h1>
-          <p id="game-instructions" class="game-instructions">Press Space or Arrow Up to jump.</p>
+          <h1 class="game-title">Jumping Game</h1>
+          <p id="game-instructions" class="game-instructions">
+            Press Space or Arrow Up to jump. Avoid obstacles to earn points.
+          </p>
         </div>
 
         <p class="game-score">
@@ -28,19 +30,25 @@
       </header>
 
       <section id="game-area" class="game-area" aria-label="Game area">
-        <div id="player" class="player-character"></div>
+        <div id="player" class="player-character">
+          <span class="player-ear player-ear--left"></span>
+          <span class="player-ear player-ear--right"></span>
+          <span class="player-body"></span>
+          <span class="player-head"></span>
+        </div>
         <div id="obstacle-layer" class="obstacle-layer" aria-hidden="true"></div>
         <div class="game-ground" aria-hidden="true"></div>
       </section>
 
-      <!-- Sean: game-over summary and restart controls. -->
-      <section
-        id="game-over"
-        class="game-over"
-        aria-labelledby="game-over-title"
-        tabindex="-1"
-        hidden
-      >
+      <section id="game-start" class="game-start" aria-labelledby="game-start-title">
+        <div>
+          <h2 id="game-start-title" class="game-start-title">Ready to jump?</h2>
+          <p class="game-start-instructions">Choose Start game when you're ready.</p>
+        </div>
+        <button id="start-btn" class="game-start-button" type="button">Start game</button>
+      </section>
+
+      <section id="game-over" class="game-over" aria-labelledby="game-over-title" hidden>
         <div>
           <h2 id="game-over-title" class="game-over-title">Game over</h2>
           <p class="game-final-score">Final score: <span id="final-score">0</span></p>
