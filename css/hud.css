@@ -1,10 +1,11 @@
 /* Owner: Sean. Score, instructions and game-over controls. */
 .game-hud {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: space-between;
   gap: clamp(1rem, 3vw, 3rem);
-  margin-bottom: 2.5rem;
+  margin: 0;
   color: var(--game-color-text);
 }
 
@@ -15,16 +16,16 @@
 .game-title {
   margin: 0;
   color: var(--game-color-text);
-  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-size: clamp(2rem, min(8vw, 10svh), 7rem);
   font-weight: 700;
   line-height: 1;
 }
 
 .game-instructions {
   max-width: 50ch;
-  margin: 0.75rem 0 0;
+  margin: clamp(0.375rem, 1svh, 0.75rem) 0 0;
   color: var(--game-color-text);
-  font-size: clamp(1rem, 2.4vw, 2.25rem);
+  font-size: clamp(1rem, min(2.4vw, 3svh), 2.25rem);
   font-weight: 600;
   line-height: 1.35;
 }
@@ -37,7 +38,7 @@
   gap: 2rem;
   min-width: clamp(12rem, 28vw, 25rem);
   margin: 0;
-  padding: clamp(0.75rem, 2vw, 1.5rem);
+  padding: clamp(0.75rem, min(2vw, 2svh), 1.5rem);
   border: 3px solid var(--game-color-border);
   border-radius: 1rem;
   background-color: var(--game-color-accent);
@@ -45,40 +46,44 @@
 
 .game-score-label {
   color: var(--game-color-text);
-  font-size: clamp(1.25rem, 2.5vw, 2.5rem);
+  font-size: clamp(1.25rem, min(2.5vw, 4svh), 2.5rem);
   font-weight: 600;
 }
 
 .game-score-value {
   color: var(--game-color-text);
-  font-size: clamp(2rem, 4vw, 4rem);
+  font-size: clamp(2rem, min(4vw, 6svh), 4rem);
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 
-/* The shared [hidden] rule keeps this panel out of view until the run ends. */
+/* The shared [hidden] rule shows only the controls for the current game state. */
+.game-start,
 .game-over {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  margin-top: 2.5rem;
+  margin: 0;
   color: var(--game-color-text);
   text-align: left;
 }
 
+.game-start-title,
 .game-over-title {
   margin: 0;
   color: var(--game-color-text);
-  font-size: clamp(2rem, 6vw, 5rem);
+  font-size: clamp(1.75rem, min(6vw, 8svh), 5rem);
   font-weight: 700;
   line-height: 1.1;
 }
 
+.game-start-instructions,
 .game-final-score {
   margin: 0.25rem 0 0;
-  font-size: clamp(1.125rem, 2.5vw, 2.25rem);
+  font-size: clamp(1rem, min(2.5vw, 3svh), 2.25rem);
   font-weight: 600;
   line-height: 1.25;
 }
@@ -89,25 +94,28 @@
   font-variant-numeric: tabular-nums;
 }
 
+.game-start-button,
 .game-restart {
   min-width: clamp(12rem, 29vw, 26rem);
   min-height: 3.5rem;
-  padding: 1rem 2rem;
+  padding: clamp(0.75rem, 2svh, 1rem) 2rem;
   border: 3px solid var(--game-color-border);
   border-radius: 0.75rem;
   background-color: var(--game-color-accent);
   color: var(--game-color-text);
   box-shadow: 6px 6px 0 var(--game-color-border);
-  font-size: clamp(1.25rem, 3vw, 3rem);
+  font-size: clamp(1.25rem, min(3vw, 5svh), 3rem);
   font-weight: 700;
   line-height: 1.2;
   cursor: pointer;
 }
 
+.game-start-button:hover,
 .game-restart:hover {
   background-color: var(--game-color-accent-hover);
 }
 
+.game-start-button:focus-visible,
 .game-restart:focus-visible {
   outline: 3px solid var(--game-color-text);
   outline-offset: 8px;
@@ -115,10 +123,11 @@
 
 @media (max-width: 48rem) {
   .game-hud,
+  .game-start,
   .game-over {
     flex-direction: column;
     align-items: stretch;
-    gap: 1.5rem;
+    gap: clamp(0.75rem, 2svh, 1.5rem);
   }
 
   .game-score {
@@ -126,6 +135,7 @@
     padding: 0.75rem 1.25rem;
   }
 
+  .game-start-button,
   .game-restart {
     min-width: 0;
     width: 100%;

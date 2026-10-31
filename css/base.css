@@ -30,7 +30,7 @@
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100svh;
   margin: 0;
   background-color: var(--game-color-page);
   color: var(--game-color-text);
@@ -48,9 +48,20 @@ button {
 }
 
 .game-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.75rem, 3svh, 2rem);
   width: min(100% - 4rem, 90rem);
+  height: 100svh;
   margin-inline: auto;
-  padding-block: clamp(2rem, 4vw, 4rem);
+  padding-block: clamp(1rem, 3svh, 2rem);
+}
+
+/* Let the scene use the remaining height while keeping controls in view. */
+.game-page > .game-area {
+  flex: 0 1 18rem;
+  min-height: 0;
 }
 
 @media (max-width: 48rem) {

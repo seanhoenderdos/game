@@ -1,19 +1,20 @@
 import { startGame } from './game.js';
 
+const startButton = document.getElementById('start-btn');
 const restartButton = document.getElementById('restart-btn');
 
-// Let the focused button use Space normally without triggering the jump handler.
-restartButton.addEventListener('keydown', (event) => {
-  if (event.code === 'Space') {
-    event.stopPropagation();
-  }
-});
+// Register each control once; neither loading nor ending a run moves focus.
+for (const button of [startButton, restartButton]) {
+  // Preserve native Space activation before the document's jump handler runs.
+  button.addEventListener('keydown', (event) => {
+    if (event.code === 'Space') {
+      event.stopPropagation();
+    }
+  });
 
-// Register this once, so restarting never adds another click listener.
-restartButton.addEventListener('click', () => {
-  // Release the control before it is hidden; gameplay keys need no heading focus.
-  restartButton.blur();
-  startGame();
-});
-
-startGame();
+  button.addEventListener('click', () => {
+    // Release the control before hiding it so gameplay keys reach the document.
+    button.blur();
+    startGame();
+  });
+}
