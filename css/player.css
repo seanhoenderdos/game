@@ -1,138 +1,133 @@
 /* Owner: Nourhan — feature/game-player. */
 
-/*
- * #player is the invisible hitbox. Its size is 2.5rem x 2.35rem times
- * --rabbit-zoom, and the drawn parts below are zoomed by the same amount.
- */
+/* Rabbit container */
 .player-character {
-  --player-fur: var(--game-color-rabbit, #fff0f4);
-  --player-outline: var(--game-color-text, #3f3047);
-  --player-ear-inner: #e7a1bc;
-  --player-ink: var(--game-color-text, #3f3047);
-  --rabbit-zoom: 1.4;
-
   position: absolute;
   bottom: 20px;
   left: 1.5rem;
   z-index: 2;
-  width: calc(2.5rem * var(--rabbit-zoom));
-  height: calc(2.35rem * var(--rabbit-zoom));
+
+  width: 3.5rem;
+  height: 4.3rem;
+
   box-sizing: border-box;
   will-change: transform;
 }
 
-/* Tail (fluffy puff behind the body). */
-.player-character::before {
-  zoom: var(--rabbit-zoom);
-  position: absolute;
-  bottom: 0.75rem;
-  left: -0.2rem;
-  z-index: 0;
-  width: 0.65rem;
-  height: 0.65rem;
-  box-sizing: border-box;
-  border: 2px solid var(--player-outline);
-  border-radius: 50%;
-  background: #ffffff;
-  content: '';
-}
-
-/* Body. */
+/* Rectangular rabbit body */
 .player-body {
-  zoom: var(--rabbit-zoom);
   position: absolute;
-  bottom: 0.25rem;
-  left: 0.1rem;
-  z-index: 1;
-  width: 1.8rem;
-  height: 1.3rem;
+  bottom: 0;
+  left: 0;
+
+  width: 3.5rem;
+  height: 2.7rem;
+
   box-sizing: border-box;
-  border: 2px solid var(--player-outline);
-  border-radius: 50% 48% 45% 50% / 60% 55% 45% 45%;
-  background: linear-gradient(145deg, #ffffff, var(--player-fur));
-}
+  border: 3px solid #493849;
+  border-radius: 0.8rem;
 
-/* Back foot and front foot. */
-.player-body::before,
-.player-body::after {
-  position: absolute;
-  bottom: -0.375rem; /* feet bottom = hitbox bottom, so they only touch the ground line */
-  width: 0.7rem;
-  height: 0.6rem;
-  box-sizing: border-box;
-  border: 2px solid var(--player-outline);
-  border-radius: 50%;
-  background: var(--player-fur);
-  content: '';
-}
+  background: linear-gradient(145deg, #ffffff, #fff0f4);
 
-.player-body::before {
-  left: 0.1rem;
-}
-
-.player-body::after {
-  right: 0.15rem;
-}
-
-/* Head with eye, nose and cheek (rabbit faces right). */
-.player-head {
-  zoom: var(--rabbit-zoom);
-  position: absolute;
-  bottom: 0.55rem;
-  left: 1.2rem;
+  box-shadow: 0 3px 0 rgb(63 48 71 / 12%);
   z-index: 2;
-  width: 1.3rem;
-  height: 1.15rem;
-  box-sizing: border-box;
-  border: 2px solid var(--player-outline);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 68% 40%, var(--player-ink) 0 0.09rem, transparent 0.11rem),
-    radial-gradient(circle at 94% 55%, #c9638c 0 0.08rem, transparent 0.1rem),
-    radial-gradient(ellipse at 62% 72%, #f5b2c7 0 0.14rem, transparent 0.16rem),
-    linear-gradient(145deg, #ffffff, var(--player-fur));
 }
 
-/* Ears: separate elements so they can move independently of the body. */
+/* Rabbit ears */
 .player-ear {
-  zoom: var(--rabbit-zoom);
   position: absolute;
-  top: -0.3rem;
-  z-index: 1;
-  width: 0.45rem;
-  height: 1rem;
-  box-sizing: content-box;
-  border: 2px solid var(--player-outline);
+  top: 0.05rem;
+
+  width: 0.75rem;
+  height: 1.8rem;
+
+  box-sizing: border-box;
+  border: 3px solid #493849;
   border-radius: 60% 60% 45% 45%;
-  background: linear-gradient(
-    to right,
-    var(--player-fur) 15%,
-    var(--player-ear-inner) 55%,
-    var(--player-fur) 90%
-  );
+
+  background: linear-gradient(to right, #fff0f4 15%, #e7a1bc 55%, #fff0f4 90%);
+
   transform-origin: 50% 90%;
   transition: transform 140ms ease-out;
+  z-index: 1;
 }
 
 .player-ear--left {
-  left: 1.3rem;
-  transform: rotate(-12deg);
+  left: 0.75rem;
+  transform: rotate(-10deg);
 }
 
 .player-ear--right {
-  left: 1.7rem;
-  transform: rotate(-6deg);
+  left: 1.85rem;
+  transform: rotate(10deg);
 }
 
-/* Subtle ear sweep-back while airborne. */
+/* Eyes */
+.player-eye {
+  position: absolute;
+  top: 32%;
+
+  width: 0.4rem;
+  height: 0.48rem;
+
+  border-radius: 50%;
+  background: #30263b;
+}
+
+.player-eye--left {
+  left: 25%;
+}
+
+.player-eye--right {
+  right: 25%;
+}
+
+/* Pink cheeks */
+.player-cheek {
+  position: absolute;
+  top: 55%;
+
+  width: 0.55rem;
+  height: 0.32rem;
+
+  border-radius: 50%;
+  background: #f5a6bd;
+}
+
+.player-cheek--left {
+  left: 9%;
+}
+
+.player-cheek--right {
+  right: 9%;
+}
+
+/* Smiling mouth */
+.player-mouth {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+
+  width: 0.55rem;
+  height: 0.3rem;
+
+  border: 2px solid #30263b;
+  border-top: 0;
+  border-radius: 0 0 50% 50%;
+
+  transform: translateX(-50%);
+}
+
+/* Ears move backward while jumping */
 .player-character.is-jumping .player-ear--left {
-  transform: rotate(-28deg);
+  transform: rotate(-25deg);
 }
 
 .player-character.is-jumping .player-ear--right {
-  transform: rotate(-22deg);
+  transform: rotate(25deg);
 }
 
+/* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   .player-ear {
     transition: none;
