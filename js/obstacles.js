@@ -34,15 +34,33 @@ export function spawnObstacle() {
   el.style.width = `${width}px`;
   el.style.height = `${height}px`;
 
+  const partClasses = [
+    'obstacle-stem',
+    'obstacle-left-vertical',
+    'obstacle-left-horizontal',
+    'obstacle-right-vertical',
+    'obstacle-right-horizontal',
+  ];
+
+  const parts = partClasses.map((className) => {
+    const part = document.createElement('div');
+
+    part.className = `obstacle-part ${className}`;
+
+    el.appendChild(part);
+
+    return part;
+  });
+
   const x = obstacleLayer.clientWidth;
 
   el.style.left = `${x}px`;
-  el.style.bottom = '20px';
 
   obstacleLayer.appendChild(el);
 
   obstacles.push({
     el,
+    parts,
     x,
     width,
     height,
@@ -76,13 +94,13 @@ export function updateObstacles(deltaSeconds) {
   const playerX = playerEl
     ? playerEl.getBoundingClientRect().left - obstacleLayer.getBoundingClientRect().left
     : 0;
-
   let newlyPassed = 0;
 
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const obstacle = obstacles[i];
 
     obstacle.x -= dx;
+
     obstacle.el.style.left = `${obstacle.x}px`;
 
     if (!obstacle.passed && obstacle.x + obstacle.width < playerX) {
@@ -107,7 +125,8 @@ export function checkCollision(playerBounds) {
   if (!playerBounds || !obstacleLayer) return false;
 
   for (const obstacle of obstacles) {
-    const bounds = obstacle.el.getBoundingClientRect();
+  for (const part of obstacle.parts) {
+    const bounds = part.getBoundingClientRect();
 
     const overlap =
       playerBounds.left < bounds.right &&
@@ -115,7 +134,10 @@ export function checkCollision(playerBounds) {
       playerBounds.top < bounds.bottom &&
       playerBounds.bottom > bounds.top;
 
-    if (overlap) return true;
+      if (overlap) {
+        return true;
+      }
+    }
   }
 
   return false;
@@ -127,5 +149,6 @@ export function resetObstacles() {
   }
 
   obstacles.length = 0;
+
   timeUntilNextSpawn = 0.8;
 }

@@ -5,32 +5,54 @@
   inset: 0;
   overflow: hidden;
   pointer-events: none;
+ }
+
+ .obstacle {
+ position: absolute;
+ left: 0;
+ bottom: 20px;
+ background: transparent;
+ }
+
+ .obstacle-part {
+ position: absolute;
+ background-color: #03521b;
+ border-radius: 4px;
+ }
+
+.obstacle-stem {
+  left: 50%;
+  bottom: 0;
+  width: 14px; 
+  height: 100%;
+  transform: translateX(-50%);
 }
 
-.obstacle {
-  position: absolute;
+.obstacle-left-vertical {
   left: 0;
-  bottom: 20px;
-  background-color: #03521b;
-  border-radius: 5px 5px 2px 2px;
+  top: 35%;
+  width: 16px; 
+  height: 25%;
 }
 
-.obstacle::before,
-.obstacle::after {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 12px;
-  background-color: #03511a;
-  border-radius: 4px;
+.obstacle-left-horizontal {
+  left: 5px;
+  top: 35%;
+  width: 20px; 
+  height: 12px; 
 }
 
-.obstacle::before {
-  top: 40%;
-  left: -6px;
-}
 
-.obstacle::after {
+.obstacle-right-vertical {
+  right: 0;
   top: 55%;
-  right: -6px;
+  width: 12px; 
+  height: 25%;
+}
+
+.obstacle-right-horizontal {
+  right: 5px;
+  top: 55%;
+  width: 16px; 
+  height: 12px; 
 }
