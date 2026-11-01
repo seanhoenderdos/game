@@ -1,6 +1,6 @@
 /**
  * Owner: Nourhan — feature/game-player.
- * Player controls and movement mechanics.
+ * Player controls, movement mechanics, and collision detection.
  */
 
 const JUMP_VELOCITY = 620;
@@ -13,7 +13,10 @@ let isGrounded = true;
 let controlsRegistered = false;
 let jumpCallback = null;
 
-/** @param {() => void} onJump - Callback invoked when a jump key is pressed. */
+/**
+ * Register keyboard controls.
+ * @param {() => void} onJump - Callback invoked when a jump key is pressed.
+ */
 export function setupControls(onJump) {
   jumpCallback = onJump;
 
@@ -43,10 +46,14 @@ export function jump() {
 
   verticalVelocity = JUMP_VELOCITY;
   isGrounded = false;
+
   document.getElementById('player')?.classList.add('is-jumping');
 }
 
-/** @param {number} deltaSeconds - Elapsed simulation time in seconds. */
+/**
+ * Update the player's vertical movement.
+ * @param {number} deltaSeconds - Elapsed simulation time in seconds.
+ */
 export function updatePlayer(deltaSeconds) {
   const player = document.getElementById('player');
 
@@ -67,17 +74,32 @@ export function updatePlayer(deltaSeconds) {
     jumpHeight = 0;
     verticalVelocity = 0;
     isGrounded = true;
+
     player.classList.remove('is-jumping');
   }
 
   player.style.transform = `translateY(${-jumpHeight}px)`;
 }
 
-/** @returns {DOMRect | null} Player bounds, or null if the player is missing. */
+/**
+ * Get the visible player's collision bounds.
+ * @returns {DOMRect | null} Player bounds, or null if the player is missing.
+ */
 export function getPlayerBounds() {
-  const player = document.getElementById('player');
+  const playerBody = document.querySelector('#player .player-body');
 
-  return player ? player.getBoundingClientRect() : null;
+  return playerBody ? playerBody.getBoundingClientRect() : null;
+}
+
+/**
+ * Get the player's collision hitboxes.
+ * The simple rectangular player has one hitbox.
+ * @returns {DOMRect[]} An array containing the player hitbox.
+ */
+export function getPlayerHitboxes() {
+  const playerBounds = getPlayerBounds();
+
+  return playerBounds ? [playerBounds] : [];
 }
 
 /** Restore the player's initial position and velocity. */
